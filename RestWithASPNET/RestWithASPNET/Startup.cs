@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using RestWithASPNET.Services;
 using RestWithASPNET.Services.Implementations;
 
 namespace RestWithASPNET
@@ -30,7 +31,6 @@ namespace RestWithASPNET
 
             services.AddControllers();
 
-            // Dependence Injection
             services.AddScoped<IPersonService, PersonServiceImplementation>();
 
             services.AddSwaggerGen(c =>

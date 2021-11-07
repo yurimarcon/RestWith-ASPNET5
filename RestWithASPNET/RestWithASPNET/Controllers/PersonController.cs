@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using RestWithASPNET.Model;
-using RestWithASPNET.Services.Implementations;
+using RestWithASPNET.Services;
 
 namespace RestWithASPNET.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class PersonController : ControllerBase
     {
         private readonly ILogger<PersonController> _logger;
@@ -31,7 +27,7 @@ namespace RestWithASPNET.Controllers
         [HttpGet("{id}")]
         public IActionResult Get(long id)
         {
-            var person = _personService.FindById(id);
+            var person = _personService.FindByID(id);
             if(person == null)return NotFound();
             return Ok(person);
         }

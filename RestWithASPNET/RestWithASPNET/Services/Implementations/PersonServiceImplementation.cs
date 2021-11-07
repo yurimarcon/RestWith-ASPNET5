@@ -2,6 +2,7 @@ using System.Threading;
 using System;
 using System.Collections.Generic;
 using RestWithASPNET.Model;
+using RestWithASPNET.Services;
 
 namespace RestWithASPNET.Services.Implementations
 {
@@ -12,6 +13,18 @@ namespace RestWithASPNET.Services.Implementations
         public Person Create(Person person)
         {
             return person;
+        }
+
+        public Person FindByID(long id)
+        {
+            return new Person
+            {
+                Id = IncrementAndGet(),
+                Name = "Yuri",
+                LastName = "Marcon",
+                Adress = "São Bernardo do Campo - SP",
+                Gender = "Male"
+            };
         }
 
         public void Delete(long id)
@@ -28,18 +41,6 @@ namespace RestWithASPNET.Services.Implementations
                 persons.Add(person);
             }
             return persons;
-        }
-
-        public Person FindById(long id)
-        {
-            return new Person
-            {
-                Id = IncrementAndGet(),
-                Name = "Yuri",
-                LastName = "Marcon",
-                Adress = "São Bernardo do Campo - SP",
-                Gender = "Male"
-            };
         }
 
         public Person Update(Person person)
@@ -66,5 +67,6 @@ namespace RestWithASPNET.Services.Implementations
             };
         }
         private long IncrementAndGet() => Interlocked.Increment(ref count);
+
     }
 }
