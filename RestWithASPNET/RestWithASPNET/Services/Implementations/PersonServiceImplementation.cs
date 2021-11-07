@@ -3,12 +3,19 @@ using System;
 using System.Collections.Generic;
 using RestWithASPNET.Model;
 using RestWithASPNET.Services;
+using RestWithASPNET.Model.Context;
+using System.Linq;
 
 namespace RestWithASPNET.Services.Implementations
 {
     public class PersonServiceImplementation : IPersonService
     {
-        private volatile int count;
+        private MySqlContext _context;
+
+        public PersonServiceImplementation(MySqlContext context)
+        {
+            _context = context;
+        }
 
         public Person Create(Person person)
         {
@@ -19,7 +26,7 @@ namespace RestWithASPNET.Services.Implementations
         {
             return new Person
             {
-                Id = IncrementAndGet(),
+                Id = 1,
                 Name = "Yuri",
                 LastName = "Marcon",
                 Adress = "São Bernardo do Campo - SP",
@@ -34,39 +41,19 @@ namespace RestWithASPNET.Services.Implementations
 
         public List<Person> FindAll()
         {
-            List<Person> persons = new List<Person>();
-            for(int i = 0; i < 8; i++)
-            {
-                Person person = MockPerson();
-                persons.Add(person);
-            }
-            return persons;
+            return _context.Persons.ToList();
         }
 
         public Person Update(Person person)
         {
             return new Person
             {
-                Id = IncrementAndGet(),
+                Id = 1,
                 Name = "Yuri",
                 LastName = "Marcon",
                 Adress = "São Bernardo do Campo - SP",
                 Gender = "Male"
             };
         }
-        
-        private Person MockPerson()
-        {
-            return new Person
-            {
-                Id = IncrementAndGet(),
-                Name = "Person Name",
-                LastName = "Person LastName",
-                Adress = "Some Address",
-                Gender = "Male"
-            };
-        }
-        private long IncrementAndGet() => Interlocked.Increment(ref count);
-
     }
 }
